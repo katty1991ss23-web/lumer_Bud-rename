@@ -72,7 +72,7 @@
             </a>
 
             <button type="button" class="navbar-toggler me-3" data-bs-toggle="collapse"
-                data-bs-target="#navbarCollapse">
+                data-bs-target="#navbarCollapse" aria-label="Меню">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
@@ -152,8 +152,7 @@
                             </div>
                         </div>
                         <p class="fs-5 mb-5 animated slideInDown" data-i18n="hero_1_desc">
-                            Повний цикл робіт: від демонтажу до фінального прибирання.<br>
-                            Ви отримуєте готовий простір без зайвих клопотів.
+                            Повний цикл робіт: від демонтажу до фінального прибирання.<span class="hero-extra"><br>Ви отримуєте готовий простір без зайвих клопотів.</span>
                         </p>
                         <a href="#contact" class="btn btn-primary hero-cta py-3 px-5 animated slideInDown" data-i18n="hero_1_cta">Зв'язатись з нами</a>
                     </div>
@@ -403,6 +402,16 @@
                     <span class="text-primary" data-i18n="rev_2_tag">Дизайн та реалізація</span>
                 </div>
             </div>
+
+            <!-- Кнопки ручного гортання відгуків (десктоп + мобільні) -->
+            <div class="reviews-controls d-flex justify-content-center gap-3 mt-4">
+                <button type="button" id="reviews-prev" class="btn btn-outline-primary border-2 btn-lg-square" aria-label="Попередній відгук">
+                    <i class="fa fa-arrow-left"></i>
+                </button>
+                <button type="button" id="reviews-next" class="btn btn-outline-primary border-2 btn-lg-square" aria-label="Наступний відгук">
+                    <i class="fa fa-arrow-right"></i>
+                </button>
+            </div>
         </div>
     </div>
     <!-- Testimonial End -->
@@ -468,6 +477,60 @@
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
+    <!-- Navbar behaviour + Reviews controls -->
+    <script>
+        (function () {
+            const DESKTOP = window.matchMedia("(min-width: 992px)");
+
+            // [DESKTOP] Блокуємо клікове відкриття дропдаунів Bootstrap:
+            // меню працюють лише по hover (CSS). Посилання (#services) при цьому спрацьовують як звичайно.
+            document.addEventListener("click", function (e) {
+                if (!DESKTOP.matches) return;
+                const toggle = e.target.closest('.navbar [data-bs-toggle="dropdown"]');
+                if (!toggle) return;
+                e.stopPropagation();
+                const href = toggle.getAttribute("href");
+                if (!href || href === "#") e.preventDefault();
+            }, true);
+
+            // [DESKTOP] Після кліку по пункту знімаємо фокус, щоб меню не залишалось відкритим
+            document.addEventListener("click", function (e) {
+                if (!DESKTOP.matches) return;
+                const item = e.target.closest(".navbar .dropdown-item");
+                if (item) item.blur();
+            });
+
+            // [MOBILE] Після вибору пункту меню — згортаємо бургер
+            document.addEventListener("click", function (e) {
+                if (DESKTOP.matches) return;
+                const link = e.target.closest("#navbarCollapse a");
+                if (!link || link.classList.contains("dropdown-toggle")) return;
+                const panel = document.getElementById("navbarCollapse");
+                if (panel && panel.classList.contains("show")) {
+                    const inst = bootstrap.Collapse.getInstance(panel) || new bootstrap.Collapse(panel, { toggle: false });
+                    inst.hide();
+                }
+            });
+
+            // При переході на десктоп прибираємо "залиплі" відкриті стани мобільного меню
+            DESKTOP.addEventListener("change", function (ev) {
+                if (!ev.matches) return;
+                document.querySelectorAll(".navbar .dropdown-menu.show").forEach(function (m) { m.classList.remove("show"); });
+                document.querySelectorAll('.navbar [data-bs-toggle="dropdown"]').forEach(function (t) {
+                    t.classList.remove("show");
+                    t.setAttribute("aria-expanded", "false");
+                });
+            });
+
+            // [ВІДГУКИ] Кнопки ← → для ручного гортання (десктоп + мобільні)
+            $(function () {
+                const $carousel = $(".testimonial-carousel");
+                $("#reviews-prev").on("click", function () { $carousel.trigger("prev.owl.carousel", [400]); });
+                $("#reviews-next").on("click", function () { $carousel.trigger("next.owl.carousel", [400]); });
+            });
+        })();
+    </script>
+
     <!-- Language Switcher (UA / EN) -->
     <script>
         // Словник перекладів: ключ відповідає атрибуту data-i18n в HTML
@@ -494,7 +557,7 @@
                 nav_about: "Про нас",
                 nav_contacts: "Контакти",
                 hero_1_title: "Ремонт під ключ",
-                hero_1_desc: "Повний цикл робіт: від демонтажу до фінального прибирання.<br>Ви отримуєте готовий простір без зайвих клопотів.",
+                hero_1_desc: "Повний цикл робіт: від демонтажу до фінального прибирання.<span class=\"hero-extra\"><br>Ви отримуєте готовий простір без зайвих клопотів.</span>",
                 hero_1_cta: "Зв'язатись з нами",
                 hero_2_title: "Будівництво та проєкти",
                 hero_2_desc: "Чіткі терміни, прозорий кошторис та контроль на кожному етапі.<br>Від проєктування та інженерії до здачі об'єкта.",
@@ -556,7 +619,7 @@
                 nav_about: "About Us",
                 nav_contacts: "Contacts",
                 hero_1_title: "Turnkey Renovation",
-                hero_1_desc: "Full cycle of works: from demolition to final cleaning.<br>You get a ready space without extra hassle.",
+                hero_1_desc: "Full cycle of works: from demolition to final cleaning.<span class=\"hero-extra\"><br>You get a ready space without extra hassle.</span>",
                 hero_1_cta: "Contact Us",
                 hero_2_title: "Construction & Projects",
                 hero_2_desc: "Clear timelines, transparent budget, and control at every stage.<br>From design and engineering to project handover.",
