@@ -1,6 +1,30 @@
-/********** Template CSS **********/
+/* =====================================================================
+   LUMIRBUD — style.css
+   ---------------------------------------------------------------------
+   ЗМІСТ
+   01. КОЛЬОРИ (змінні)
+   02. БАЗА (body, утиліти)
+   03. КНОПКА "НАГОРУ" + СПІНЕР
+   04. КНОПКИ (CTA)
+   05. ШАПКА / НАВІГАЦІЯ      [DESKTOP] + [MOBILE]
+   06. HERO-КАРУСЕЛЬ          [DESKTOP] + [MOBILE]
+   07. ЗАГОЛОВКИ СЕКЦІЙ (.title)  [DESKTOP] + [PHONE]
+   08. ПОСЛУГИ (.service-item)    [DESKTOP] + [PHONE]
+   09. БЛОК РОЗРАХУНКУ (#calculator)  [PHONE]
+   10. ПРОЄКТИ (.team-item)
+   11. ВІДГУКИ (.testimonial)     [DESKTOP] + [PHONE]
+   12. ФУТЕР / КОНТАКТИ           [DESKTOP] + [PHONE]
 
-/* === [ГОЛОВНІ КОЛЬОРИ LUMIRBUD — МІНЯТИ ТУТ] === */
+   БРЕЙКПОІНТИ
+   DESKTOP  ≥ 992px
+   MOBILE   ≤ 991.98px  (бургер-меню, hero)
+   PHONE    ≤ 767.98px  (центрування текстів, відступи)
+   ===================================================================== */
+
+
+/* =====================================================================
+   01. КОЛЬОРИ — МІНЯТИ ТУТ
+   ===================================================================== */
 :root {
     --bs-primary: #2bb3a3;        /* Бірюзово-м'ятний акцент (кнопки, лого, hover) */
     --bs-primary-rgb: 43, 179, 163;
@@ -10,8 +34,13 @@
     --bs-secondary-rgb: 28, 31, 36;
 }
 
+
+/* =====================================================================
+   02. БАЗА
+   ===================================================================== */
 body {
     background-color: var(--bs-dark);
+    overflow-x: hidden;           /* [MOBILE FIX] прибирає зсув сторінки вправо */
 }
 
 .text-primary {
@@ -26,7 +55,10 @@ body {
     background-color: var(--bs-secondary) !important;
 }
 
-/* [CTA / КНОПКА] Фіксована кнопка повернення вгору */
+
+/* =====================================================================
+   03. КНОПКА "НАГОРУ" + СПІНЕР
+   ===================================================================== */
 .back-to-top {
     position: fixed;
     display: none;
@@ -35,8 +67,14 @@ body {
     z-index: 99;
 }
 
+@media (max-width: 767.98px) {
+    /* [PHONE] Кнопка "нагору" ближче до краю */
+    .back-to-top {
+        right: 16px;
+        bottom: 16px;
+    }
+}
 
-/*** Spinner ***/
 #spinner {
     opacity: 0;
     visibility: hidden;
@@ -51,7 +89,9 @@ body {
 }
 
 
-/*** Button [CTA / КНОПКИ] ***/
+/* =====================================================================
+   04. КНОПКИ [CTA]
+   ===================================================================== */
 .btn {
     font-weight: 600;
     transition: .5s;
@@ -83,7 +123,7 @@ body {
     font-weight: inherit;
 }
 
-/* [КОЛІР + АНІМАЦІЯ ПЕРЕЛИВУ] Суцільна головна кнопка CTA з ефектом переливу як на сонці */
+/* [АНІМАЦІЯ ПЕРЕЛИВУ] Ефект блиску як на сонці */
 @keyframes sunShimmer {
     0% {
         background-position: -180% 50%;
@@ -93,6 +133,7 @@ body {
     }
 }
 
+/* [КОЛІР] Суцільна головна кнопка CTA */
 .btn-primary {
     position: relative;
     overflow: hidden;
@@ -112,7 +153,7 @@ body {
     animation: sunShimmer 4.5s ease-in-out infinite;
 }
 
-/* [HOVER + КОЛІР] Наведення на залиту кнопку CTA */
+/* [HOVER] */
 .btn-primary:hover {
     background-color: #34cbb9 !important;
     border-color: #34cbb9 !important;
@@ -121,19 +162,18 @@ body {
     transform: translateY(-1px);
 }
 
-/* [КЛІК / ACTIVE] Момент натискання на кнопку CTA */
+/* [КЛІК] */
 .btn-primary:active {
     transform: translateY(1px);
     box-shadow: 0 2px 10px rgba(43, 179, 163, 0.3);
 }
 
-/* [КОЛІР] Контурна кнопка CTA */
+/* [КОЛІР] Контурна кнопка */
 .btn-outline-primary {
     color: var(--bs-primary) !important;
     border-color: var(--bs-primary) !important;
 }
 
-/* [HOVER + КОЛІР] Наведення на контурну кнопку CTA */
 .btn-outline-primary:hover {
     background-color: var(--bs-primary) !important;
     border-color: var(--bs-primary) !important;
@@ -141,7 +181,12 @@ body {
 }
 
 
-/*** Navbar (Compact & Clean) ***/
+/* =====================================================================
+   05. ШАПКА / НАВІГАЦІЯ
+   ===================================================================== */
+
+/* ---------- [DESKTOP + ЗАГАЛЬНЕ] ---------- */
+
 /* [КОЛІР] Напівпрозорий фон шапки */
 .navbar {
     position: absolute;
@@ -168,7 +213,7 @@ body {
     gap: 2px;
 }
 
-/* [КОЛІР] Колір тексту пунктів меню */
+/* [КОЛІР] Пункти меню */
 .navbar .navbar-nav .nav-link {
     margin-right: 12px;
     padding: 14px 4px;
@@ -185,13 +230,13 @@ body {
     margin-right: 0;
 }
 
-/* [HOVER + КОЛІР] Наведення та активний пункт меню */
+/* [HOVER] Наведення та активний пункт */
 .navbar .navbar-nav .nav-link:hover,
 .navbar .navbar-nav .nav-link.active {
     color: var(--bs-primary);
 }
 
-/* [КОЛІР] Випадаюче меню ("гармошка") */
+/* [КОЛІР] Випадаюче меню */
 .navbar .dropdown-menu {
     background-color: var(--bs-secondary);
     border: 1px solid rgba(255, 255, 255, .1);
@@ -203,13 +248,13 @@ body {
     transition: .2s;
 }
 
-/* [HOVER МОВИ / ПУНКТІВ] Тільки наведення курсором — легка підсвітка без заливки */
+/* [HOVER ПУНКТУ / МОВИ] */
 .navbar .dropdown-item:hover {
     background-color: rgba(255, 255, 255, 0.08);
     color: #7ee8db;
 }
 
-/* [ВИБРАНА МОВА / КЛІК] Активна мова та момент кліку — чіткий акцент і контраст */
+/* [ВИБРАНА МОВА / КЛІК] */
 .navbar .dropdown-item.active,
 .navbar .dropdown-item:active {
     background-color: var(--bs-primary);
@@ -217,13 +262,13 @@ body {
     font-weight: 700;
 }
 
-/* [HOVER АКТИВНОЇ МОВИ] Якщо навести курсор на вже вибрану мову */
+/* [HOVER АКТИВНОЇ МОВИ] */
 .navbar .dropdown-item.active:hover {
     background-color: #36c9b8;
     color: #090c0e;
 }
 
-/* [CTA / ПРАВИЙ БЛОК] Мова, соцмережі, кнопка */
+/* [ПРАВИЙ БЛОК] Мова, соцмережі */
 .navbar .d-lg-flex {
     flex-shrink: 0;
 }
@@ -250,6 +295,19 @@ body {
     justify-content: center;
 }
 
+/* [СТРІЛКА ДРОПДАУНА] Шрифт FA7 + запасні варіанти */
+.navbar .dropdown-toggle::after {
+    border: none;
+    content: "\f107";
+    font-family: "Font Awesome 7 Free", "Font Awesome 6 Free", "Font Awesome 5 Free";
+    font-weight: 900;
+    vertical-align: middle;
+    margin-left: 5px;
+    font-size: 11px;
+    display: inline-block;
+    transition: transform .25s;
+}
+
 @media (max-width: 1399.98px) {
     .navbar .navbar-brand h2 {
         font-size: 22px;
@@ -266,35 +324,13 @@ body {
     }
 }
 
-@media (max-width: 991.98px) {
-    /* [КОЛІР] Фон мобільного меню */
-    .navbar {
-        background: rgba(20, 22, 25, .96);
-        backdrop-filter: none;
-    }
-
-    .navbar .navbar-nav {
-        align-items: flex-start;
-        gap: 0;
-        margin-top: 10px;
-        padding-top: 8px;
-        border-top: 1px solid rgba(255, 255, 255, .15); /* [КОЛІР] Лінія розділювача */
-    }
-
-    .navbar .navbar-nav .nav-link,
-    .navbar.bg-dark .navbar-nav .nav-link {
-        margin-right: 0;
-        padding: 10px 0;
-        font-size: 14px;
-        white-space: normal;
-    }
-}
-
+/* ---------- [DESKTOP ≥ 992px] Дропдауни ТІЛЬКИ по hover ---------- */
 @media (min-width: 992px) {
     .navbar.bg-dark .navbar-nav .nav-link {
         padding: 14px 4px;
     }
 
+    /* Закрите меню: невидиме і НЕ ловить курсор */
     .navbar .nav-item .dropdown-menu {
         display: block;
         border: none;
@@ -302,31 +338,127 @@ body {
         top: 140%;
         opacity: 0;
         visibility: hidden;
+        pointer-events: none;
         transition: .35s;
     }
 
-    /* [HOVER] Випадаюче меню при наведенні */
-    .navbar .nav-item:hover .dropdown-menu {
+    /* Відкрите меню: наведення мишею або навігація з клавіатури */
+    .navbar .nav-item:hover .dropdown-menu,
+    .navbar .nav-item:has(:focus-visible) .dropdown-menu {
         top: 100%;
         visibility: visible;
-        transition: .35s;
         opacity: 1;
+        pointer-events: auto;
+        transition: .35s;
     }
 }
 
-.navbar .dropdown-toggle::after {
-    border: none;
-    content: "\f107";
-    font-family: "Font Awesome 5 Free";
-    font-weight: 900;
-    vertical-align: middle;
-    margin-left: 5px;
-    font-size: 11px;
+/* ---------- [MOBILE ≤ 991.98px] Бургер-меню під палець ---------- */
+@media (max-width: 991.98px) {
+    /* [КОЛІР] Фон мобільної шапки */
+    .navbar {
+        background: rgba(20, 22, 25, .96);
+        backdrop-filter: none;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    /* Кнопка-бургер 48×48 */
+    .navbar .navbar-toggler {
+        width: 48px;
+        height: 48px;
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid rgba(255, 255, 255, .25);
+        border-radius: 12px;
+    }
+
+    .navbar .navbar-toggler:focus {
+        box-shadow: 0 0 0 .2rem rgba(43, 179, 163, .35);
+    }
+
+    /* Розкрите меню прокручується, якщо не влазить в екран */
+    .navbar .navbar-collapse {
+        max-height: calc(100vh - 76px);
+        max-height: calc(100dvh - 76px);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .navbar .navbar-nav {
+        align-items: stretch;
+        gap: 0;
+        width: 100%;
+        margin-top: 10px;
+        padding-top: 8px;
+        border-top: 1px solid rgba(255, 255, 255, .15); /* [КОЛІР] Розділювач */
+    }
+
+    /* Пункти меню — висота пальця (мін. 52px) */
+    .navbar .navbar-nav .nav-link,
+    .navbar.bg-dark .navbar-nav .nav-link {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 52px;
+        margin-right: 0;
+        padding: 12px 4px;
+        font-size: 15px;
+        white-space: normal;
+        border-bottom: 1px solid rgba(255, 255, 255, .06);
+    }
+
+    /* Стрілка праворуч, перевертається при відкритті */
+    .navbar .dropdown-toggle::after {
+        margin-left: auto;
+        padding-left: 12px;
+        font-size: 14px;
+    }
+
+    .navbar .dropdown-toggle[aria-expanded="true"]::after {
+        transform: rotate(180deg);
+    }
+
+    .navbar .dropdown-toggle[aria-expanded="true"] {
+        color: var(--bs-primary);
+    }
+
+    /* Випадаючий список всередині меню (не плаває, йде по потоку) */
+    .navbar .dropdown-menu {
+        position: static;
+        float: none;
+        width: 100%;
+        margin: 0 0 6px;
+        padding: 6px 0 6px 10px;
+        background: rgba(255, 255, 255, .04);
+        border: 0;
+        border-left: 2px solid var(--bs-primary);
+        border-radius: 0 12px 12px 0;
+        transform: none !important;
+    }
+
+    /* Пункти списку — мін. 48px висоти */
+    .navbar .dropdown-item {
+        display: flex;
+        align-items: center;
+        min-height: 48px;
+        padding: 12px 16px;
+        font-size: 15px;
+        white-space: normal;
+        border-radius: 10px;
+    }
 }
 
 
-/*** Header ***/
-/* [КОЛІР] Фон каруселі (графіт + бірюзовий відблиск, навіть без фото) */
+/* =====================================================================
+   06. HERO-КАРУСЕЛЬ
+   ===================================================================== */
+
+/* ---------- [DESKTOP + ЗАГАЛЬНЕ] ---------- */
+
+/* [КОЛІР] Фон каруселі (графіт + бірюзовий відблиск) */
 #header-carousel .carousel-item {
     min-height: 620px;
     background:
@@ -336,7 +468,7 @@ body {
     background-color: var(--bs-dark);
 }
 
-/* [КОЛІР] Темне затемнення поверх каруселі */
+/* [КОЛІР] Затемнення поверх каруселі */
 .carousel-caption {
     top: 0;
     left: 0;
@@ -347,7 +479,7 @@ body {
     z-index: 1;
 }
 
-/* [CTA / СТРІЛКИ СЛАЙДЕРА] */
+/* [СТРІЛКИ СЛАЙДЕРА] */
 .carousel-control-prev,
 .carousel-control-next {
     width: 10%;
@@ -359,34 +491,87 @@ body {
     height: 3rem;
 }
 
-@media (max-width: 768px) {
-    #header-carousel .carousel-item {
-        position: relative;
-        min-height: 550px;
-    }
-    
-    #header-carousel .carousel-item img {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
-}
-
-/* [КОЛІР] Градієнт і фон заголовка сторінки */
+/* [КОЛІР] Фон і градієнт заголовка внутрішніх сторінок */
 .page-header {
     padding-top: 200px;
     background: linear-gradient(rgba(16, 18, 22, .8), rgba(16, 18, 22, .8)), url(../img/carousel-1.jpg) top center no-repeat;
     background-size: cover;
 }
 
-/* [КОЛІР] Розділювач хлібних крихт */
 .page-header .breadcrumb-item + .breadcrumb-item::before {
     color: var(--bs-white);
 }
 
+/* ---------- [MOBILE ≤ 991.98px] ---------- */
+@media (max-width: 991.98px) {
+    #header-carousel .carousel-item {
+        position: relative;
+        min-height: 580px;
+    }
 
-/*** Title ***/
+    /* Картинка — на фон */
+    #header-carousel .carousel-item img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Текстовий блок росте разом зі змістом, а не стискається */
+    #header-carousel .carousel-caption {
+        position: relative;
+        min-height: 580px;
+        padding: 110px 52px 64px;   /* бічні 52px — щоб стрілки не перекривали текст */
+        text-align: center;
+    }
+
+    #header-carousel .carousel-caption h1.display-1 {
+        font-size: clamp(2rem, 9vw, 2.75rem);
+        line-height: 1.15;
+    }
+
+    #header-carousel .carousel-caption p {
+        font-size: 1rem !important;
+        line-height: 1.5;
+        margin-bottom: 1.5rem !important;
+    }
+
+    /* Кнопка в hero */
+    #header-carousel .hero-cta {
+        width: 100%;
+        max-width: 320px;
+        padding: 14px 24px !important;
+    }
+
+    /* Стрілки слайдера компактніші */
+    #header-carousel .carousel-control-prev,
+    #header-carousel .carousel-control-next {
+        width: 44px;
+    }
+
+    #header-carousel .carousel-control-prev-icon,
+    #header-carousel .carousel-control-next-icon {
+        width: 2rem;
+        height: 2rem;
+    }
+}
+
+/* ---------- [PHONE ≤ 767.98px] ---------- */
+@media (max-width: 767.98px) {
+    /* Друге речення в hero ховаємо — воно давило на слайд */
+    #header-carousel .hero-extra {
+        display: none;
+    }
+}
+
+
+/* =====================================================================
+   07. ЗАГОЛОВКИ СЕКЦІЙ (.title)
+   ===================================================================== */
+
+/* ---------- [DESKTOP + ЗАГАЛЬНЕ] ---------- */
 .title {
     margin-bottom: 2rem;
 }
@@ -417,7 +602,7 @@ body {
     color: var(--bs-primary);
 }
 
-/* [КОЛІР] Горизонтальні лінії біля підзаголовка */
+/* [КОЛІР] Лінії біля підзаголовка */
 .title .title-left h5::after,
 .title .title-center h5::before,
 .title .title-center h5::after,
@@ -447,8 +632,34 @@ body {
     border-bottom: 1px solid rgba(255, 255, 255, .25);
 }
 
+/* ---------- [PHONE ≤ 767.98px] Заголовки строго по центру ---------- */
+@media (max-width: 767.98px) {
+    /* Скидаємо великі бічні відступи (mx-5 px-5), які зміщували і стискали текст */
+    .title {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        width: 100%;
+    }
 
-/*** Service ***/
+    .title .title-center {
+        display: block;
+        width: 100%;
+        text-align: center;
+    }
+
+    .title .title-center h1 {
+        text-align: center;
+    }
+}
+
+
+/* =====================================================================
+   08. ПОСЛУГИ (.service-item)
+   ===================================================================== */
+
+/* ---------- [DESKTOP + ЗАГАЛЬНЕ] ---------- */
 .service-item {
     position: relative;
     margin-top: 2.5rem;
@@ -460,7 +671,7 @@ body {
     display: inline-block;
 }
 
-/* [КОЛІР] Кільце навколо картинки послуги */
+/* [КОЛІР] Кільце навколо картинки */
 .service-item .service-img::before {
     position: absolute;
     content: "";
@@ -474,7 +685,7 @@ body {
     z-index: 1;
 }
 
-/* [КОЛІР] Градієнти фону карток послуг */
+/* [КОЛІР] Градієнти фону карток */
 .service-item.service-item-left {
     border-radius: 500px 0 0 500px;
     background: linear-gradient(to right, var(--bs-secondary), var(--bs-dark));
@@ -485,23 +696,58 @@ body {
     background: linear-gradient(to left, var(--bs-secondary), var(--bs-dark));
 }
 
+/* ---------- [PHONE ≤ 767.98px] ---------- */
 @media (max-width: 767.98px) {
-    /* [КОЛІР] Мобільний градієнт картки послуги */
+    /* [КОЛІР] Вертикальний градієнт картки */
     .service-item.service-item-left,
     .service-item.service-item-right {
         border-radius: 500px 500px 0 0;
         background: linear-gradient(to bottom, var(--bs-secondary), var(--bs-dark));
         text-align: center;
     }
+
+    /* Картинка та текст — по центру */
+    .service-item .col-md-5,
+    .service-item .col-md-7 {
+        text-align: center;
+    }
+
+    .service-item .service-text {
+        text-align: center !important;
+        padding: 0 24px 40px !important;
+    }
 }
 
 
-/*** Team ***/
+/* =====================================================================
+   09. БЛОК РОЗРАХУНКУ (#calculator)
+   (поле вводу + кнопка — НЕ чіпали, окрема задача)
+   ===================================================================== */
+
+/* ---------- [PHONE ≤ 767.98px] Тексти по центру ---------- */
+@media (max-width: 767.98px) {
+    #calculator .row,
+    #calculator .col-lg-7 {
+        margin-left: 0;
+        margin-right: 0;
+        text-align: center;
+    }
+
+    #calculator p {
+        text-align: center;
+        font-size: 1.05rem !important;
+    }
+}
+
+
+/* =====================================================================
+   10. ПРОЄКТИ (.team-item)
+   ===================================================================== */
 .team-item {
     position: relative;
 }
 
-/* [КОЛІР] Підкладка під назвою картки */
+/* [КОЛІР] Підкладка під назвою */
 .team-item .team-name {
     position: absolute;
     width: 100%;
@@ -519,7 +765,7 @@ body {
     overflow: hidden;
 }
 
-/* [КОЛІР] Бокові шторки картки */
+/* [КОЛІР] Бокові шторки */
 .team-item .team-body .team-before,
 .team-item .team-body .team-after {
     position: absolute;
@@ -544,13 +790,12 @@ body {
     text-align: right;
 }
 
-/* [HOVER] Розкриття шторок при наведенні */
+/* [HOVER] Розкриття шторок */
 .team-item:hover .team-body .team-before,
 .team-item:hover .team-body .team-after {
     width: 50%;
 }
 
-/* [КОЛІР] Колір тексту всередині шторок */
 .team-item .team-body .team-before span,
 .team-item .team-body .team-after span {
     margin: 5px;
@@ -559,7 +804,6 @@ body {
     transition: .5s;
 }
 
-/* [HOVER] Поява тексту при наведенні */
 .team-item:hover .team-body .team-before span,
 .team-item:hover .team-body .team-after span {
     opacity: 1;
@@ -567,7 +811,11 @@ body {
 }
 
 
-/*** Testimonial ***/
+/* =====================================================================
+   11. ВІДГУКИ (.testimonial)
+   ===================================================================== */
+
+/* ---------- [DESKTOP + ЗАГАЛЬНЕ] ---------- */
 .testimonial-carousel {
     max-width: 700px;
     margin: 0 auto;
@@ -607,12 +855,66 @@ body {
     opacity: 1;
 }
 
+/* [КНОПКИ ← →] Ручне гортання відгуків (десктоп + мобільні) */
+.reviews-controls .btn {
+    width: 52px;
+    height: 52px;
+    flex-shrink: 0;
+}
 
-/*** Footer ***/
-/* [КОЛІР] Чистий темний футер (без силуетів моделей) */
+/* ---------- [PHONE ≤ 767.98px] ---------- */
+@media (max-width: 767.98px) {
+    .testimonial-item {
+        padding: 0 8px;
+        text-align: center;
+    }
+
+    .testimonial-item p {
+        font-size: 1.05rem !important;
+    }
+
+    .testimonial-carousel .owl-dots {
+        height: 84px;
+    }
+
+    .testimonial-carousel .owl-dots .owl-dot {
+        width: 48px;
+        height: 48px;
+        padding: 8px;
+    }
+
+    .testimonial-carousel .owl-dots .owl-dot.active {
+        width: 76px;
+        height: 76px;
+    }
+}
+
+
+/* =====================================================================
+   12. ФУТЕР / КОНТАКТИ
+   ===================================================================== */
+
+/* ---------- [DESKTOP + ЗАГАЛЬНЕ] ---------- */
+/* [КОЛІР] Чистий темний футер */
 .footer {
     background-color: var(--bs-dark);
     background-image: none;
     animation: none;
     border-top: 1px solid rgba(255, 255, 255, .08);
+}
+
+/* ---------- [PHONE ≤ 767.98px] ---------- */
+@media (max-width: 767.98px) {
+    .footer .container {
+        text-align: center;
+    }
+
+    .footer h1 {
+        font-size: 2rem;
+    }
+
+    .footer h1 svg {
+        width: 36px;
+        height: 41px;
+    }
 }
